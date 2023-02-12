@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { List, ListItem, Title, ParagraphText } from './ContactList.styled';
 import { Button } from '../App.styled';
 

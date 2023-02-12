@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { Content, Title, Input, LabelTitle } from './Filter.styled';
 
 export const Filter = ({ filterValue, onChange }) => {
