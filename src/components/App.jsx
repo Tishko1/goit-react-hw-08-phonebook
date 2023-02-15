@@ -16,9 +16,9 @@ export class App extends Component {
     const contacts = localStorage.getItem('contacts') ;
     const parsedContacts = JSON.parse(contacts) ?? [];
 
-    if (parsedContacts) {
+    
       this.setState({ contacts: parsedContacts  });
-    }
+    
   }
 
   componentDidUpdate(prevState) {
@@ -34,7 +34,7 @@ export class App extends Component {
     if (isInclude) {
       alert('This contact is already in your contact list');
       return;
-    } else {
+    } 
       this.setState(prevState => {
         const newContacts = [
           ...prevState.contacts,
@@ -45,7 +45,7 @@ export class App extends Component {
           contacts: newContacts,
         };
       });
-    }
+    
   };
 
   changeFilter = event => {
