@@ -1,7 +1,7 @@
 import styled from '@emotion/styled';
 
 export const Container = styled.div`
-font-size: 14px;
+  font-size: 14px;
   width: 560px;
   margin: 15px auto;
   padding: 15px;
@@ -11,7 +11,7 @@ font-size: 14px;
   text-align: center;
   border: 5px solid #77529e;
   border-radius: 20px;
-`
+`;
 
 export const Button = styled.button`
   display: block;
@@ -24,6 +24,6 @@ export const Button = styled.button`
   border-radius: 5px;
   border: 3px solid #cca8e9;
   &:hover {
-  background-color: #c3bef0;
+    background-color: #c3bef0;
   }
-`
+`;
