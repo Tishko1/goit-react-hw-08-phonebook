@@ -1,13 +1,23 @@
+// import { selectFilter } from 'redux/selectors';
+import { useDispatch } from 'react-redux';
+// import { useDispatch, useSelector } from 'react-redux';
+
+import { changeFilter } from 'redux/filterSlice';
 import PropTypes from 'prop-types';
 import { Content, Title, Input, LabelTitle } from './Filter.styled';
 
-export const Filter = ({ filterValue, onChange }) => {
+export const Filter = () => {
+  const dispatch = useDispatch();
+
   return (
     <div>
       <Title>Find contact</Title>
       <Content>
         <LabelTitle>Find contact:</LabelTitle>
-        <Input type="text" value={filterValue} onChange={onChange} />
+        <Input
+          type="text"
+          onChange={e => dispatch(changeFilter(e.target.value))}
+        />
       </Content>
     </div>
   );

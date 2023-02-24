@@ -1,8 +1,15 @@
 import PropTypes from 'prop-types';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectFilteredContacts } from 'redux/selectors';
+
+import { deleteContact } from 'redux/contactsSlice';
 import { List, ListItem, Title, ParagraphText } from './ContactList.styled';
 import { Button } from '../App.styled';
 
-export const ContactList = ({ contacts, deleteContact }) => {
+export const ContactList = () => {
+  const dispatch = useDispatch();
+  const contacts = useSelector(selectFilteredContacts);
+
   return (
     <div>
       <Title>Contact List</Title>
@@ -17,7 +24,7 @@ export const ContactList = ({ contacts, deleteContact }) => {
                 <ParagraphText>Tel. number:</ParagraphText> {number}
               </p>
             </div>
-            <Button type="button" onClick={() => deleteContact(id)}>
+            <Button type="button" onClick={() => dispatch(deleteContact(id))}>
               Delete
             </Button>
           </ListItem>
