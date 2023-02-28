@@ -1,6 +1,4 @@
-// import { selectFilter } from 'redux/selectors';
 import { useDispatch } from 'react-redux';
-// import { useDispatch, useSelector } from 'react-redux';
 
 import { changeFilter } from 'redux/filterSlice';
 import PropTypes from 'prop-types';

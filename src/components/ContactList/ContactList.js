@@ -2,7 +2,7 @@ import PropTypes from 'prop-types';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectFilteredContacts } from 'redux/selectors';
 
-import { deleteContact } from 'redux/contactsSlice';
+import { deleteContact } from 'redux/operations';
 import { List, ListItem, Title, ParagraphText } from './ContactList.styled';
 import { Button } from '../App.styled';
 

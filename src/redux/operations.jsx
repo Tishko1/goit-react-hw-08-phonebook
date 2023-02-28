@@ -1,42 +1,42 @@
-import axios from "axios";
-import { createAsyncThunk } from "@reduxjs/toolkit";
+import axios from 'axios';
+import { createAsyncThunk } from '@reduxjs/toolkit';
 
-const contactsApi = axios.create({
-  baseURL: "https://63c807835c0760f69ac3a179.mockapi.io/contacts/",
+const instance = axios.create({
+  baseURL: 'https://63fca2718ef914c5559be359.mockapi.io/',
 });
 
-export const fetchContactsOperation = createAsyncThunk(
-  "contacts/fetchAll",
-  async (_, thunkAPI) => {
+export const getContacts = createAsyncThunk(
+  'contacts/fetchAll',
+  async (_, thunkApi) => {
     try {
-      const { data } = await contactsApi.get();
-      return data;
+      const response = await instance.get('/contacts');
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
 
-export const addContactOperation = createAsyncThunk(
-    "contacts/addContact",
-    async (contact, thunkAPI) => {
-      try {
-        const { data } = await contactsApi.post('', contact);
-        return data;
-      } catch (error) {
-        return thunkAPI.rejectWithValue(error);
-      }
-    }
-  );
-
-export const deleteContactOperation = createAsyncThunk(
-  "contacts/deleteContact",
-  async (contactID, thunkAPI) => {
+export const deleteContact = createAsyncThunk(
+  'contacts/delete',
+  async (contactId, thunkApi) => {
     try {
-      const { data } = await contactsApi.delete(contactID);
-      return data;
+      const response = await instance.delete(`/contacts/${contactId}`);
+      return response.data;
     } catch (error) {
-      return thunkAPI.rejectWithValue(error);
+      return thunkApi.rejectWithValue(error.message);
+    }
+  }
+);
+
+export const addContact = createAsyncThunk(
+  'contacts/add',
+  async (contact, thunkApi) => {
+    try {
+      const response = await instance.post(`/contacts`, contact);
+      return response.data;
+    } catch (error) {
+      return thunkApi.rejectWithValue(error.message);
     }
   }
 );
