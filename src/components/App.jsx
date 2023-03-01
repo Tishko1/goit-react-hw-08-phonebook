@@ -1,5 +1,6 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
+import { Route, Routes, Navigate } from 'react-router-dom';
 import { ContactForm } from './ContactForm/ContactForm';
 import { ContactList } from './ContactList/ContactList';
 import { Filter } from './Filter/Filter';
@@ -8,6 +9,10 @@ import { Container } from './App.styled';
 import { useSelector } from 'react-redux';
 import { selectFilteredContacts, selectIsLoading } from 'redux/selectors';
 import { getContacts } from 'redux/operations';
+import { NavBar } from './NavBar/NavBar';
+import { Login } from "./Login/Login";
+import { Register } from "./Register/Register";
+import  Home from 'pages/Home';
 
 export function App() {
   const contacts = useSelector(selectFilteredContacts);
@@ -19,7 +24,22 @@ export function App() {
   }, [dispatch]);
 
   return (
-    <Container>
+    <Routes>
+      <Route path="/" element={<NavBar/>}>
+        <Route path="/login" element={<Login/>}/>
+        <Route path="/register" element={<Register/>}/>
+        <Route index element={<Home />} />
+          <Route path="/сontactForm" element={<ContactForm/>}/>
+          <Route path="/filter" element={<Filter/>}/>
+          <Route path="/сontactList" element={<ContactList/>}/>
+      </Route>
+      <Route path="*" element={<Navigate to="/" replace={true} />} />
+    </Routes>
+    
+  );
+}
+
+{/* <Container>
       {isLoading && <Loader />}
       <h1>Phonebook App</h1>
       <ContactForm />
@@ -29,6 +49,4 @@ export function App() {
       ) : (
         <p>Your contact list is empty</p>
       )}
-    </Container>
-  );
-}
+    </Container> */}

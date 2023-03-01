@@ -1,5 +1,8 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
+import { BrowserRouter } from 'react-router-dom';
+
+// import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { Global, ThemeProvider } from '@emotion/react';
 import { GlobalStyles } from 'styles/GlobalStyles';
@@ -16,7 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       {/* <PersistGate loading={null} persistor={persistor}> */}
       <ThemeProvider theme={theme}>
         <Global styles={GlobalStyles} />
+        <BrowserRouter basename='goit-react-hw-08-phonebook'>
         <App />
+        </BrowserRouter>
       </ThemeProvider>
       {/* </PersistGate> */}
     </Provider>
