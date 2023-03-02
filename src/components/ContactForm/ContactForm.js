@@ -9,8 +9,9 @@ import {
   LabelGroup,
   LabelTitle,
   Input,
+  Button
 } from './ContactForm.styled';
-import { Button } from '../App.styled';
+// import { Button } from '../../App.styled';
 
 export function ContactForm() {
   const [name, setName] = useState('');

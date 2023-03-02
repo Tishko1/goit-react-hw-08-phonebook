@@ -4,7 +4,7 @@ import { selectFilteredContacts } from 'redux/selectors';
 
 import { deleteContact } from 'redux/operations';
 import { List, ListItem, Title, ParagraphText } from './ContactList.styled';
-import { Button } from '../App.styled';
+import { Button } from '../../App.styled';
 
 export const ContactList = () => {
   const dispatch = useDispatch();
