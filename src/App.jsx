@@ -1,21 +1,16 @@
 import React, { Suspense, lazy, useEffect } from 'react';
 import { Navigate, Route, Routes } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 
-// import HomePage from 'pages/Home/Home';
-// import SignInPage from 'pages/SignIn/SignIn';
-// import SignUpPage from 'pages/SignUp/SignUp';
-// import ContactsPage from 'pages/Contacts/Contacts';
 
 import Loader from 'components/Loader/Loader';
 
-import { selectIsLoggedIn, selectUserData } from 'redux/userSlice/selectors';
 
-import { StyledNavLink, Button, Title } from 'App.styled';
+
 import {
   getCurrentUserRequest,
-  logOutRequest,
 } from 'redux/userSlice/userSlice';
+import { Header } from 'components/Header/Header';
 
 const HomePage = lazy(() => import('pages/Home/Home'));
 const SignInPage = lazy(() => import('pages/SignIn/SignIn'));
@@ -24,12 +19,10 @@ const ContactsPage = lazy(() => import('pages/Contacts/Contacts'));
 
 export const App = () => {
   const dispatch = useDispatch();
-  const isLoggedIn = useSelector(selectIsLoggedIn);
-  const userData = useSelector(selectUserData);
+  // const isLoggedIn = useSelector(selectIsLoggedIn);
+  // const userData = useSelector(selectUserData);
 
-  const handleLogOut = () => {
-    dispatch(logOutRequest());
-  };
+  
 
   useEffect(() => {
     const token = localStorage.getItem('token');
@@ -40,29 +33,13 @@ export const App = () => {
 
   return (
     <div>
-      <header>
-        <nav>
-          {isLoggedIn ? (
-            <>
-              <StyledNavLink to="/">Home</StyledNavLink>
-              <StyledNavLink to="/contacts">Contacts</StyledNavLink>
-              <Title>Hello, {userData.name}</Title>
-              <Button onClick={handleLogOut}>Logout</Button>
-            </>
-          ) : (
-            <>
-              <StyledNavLink to="/">Home</StyledNavLink>
-              <StyledNavLink to="/sign-in">Sign In</StyledNavLink>
-              <StyledNavLink to="/sign-up">Sign Up</StyledNavLink>
-            </>
-          )}
-        </nav>
-      </header>
-
+      <Header/>
+        
       <main>
         <Suspense fallback={<Loader />}>
           <Routes>
-            <Route path="/" element={<HomePage />} />
+            <Route path="/" element={<Header />} />
+            <Route index element={<HomePage />} />
             <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
@@ -75,16 +52,3 @@ export const App = () => {
   );
 };
 
-
-
-// {/* <Container>
-//       {isLoading && <Loader />}
-//       <h1>Phonebook App</h1>
-//       <ContactForm />
-//       <Filter />
-//       {contacts.length > 0 ? (
-//         <ContactList />
-//       ) : (
-//         <p>Your contact list is empty</p>
-//       )}
-//     </Container> */}
