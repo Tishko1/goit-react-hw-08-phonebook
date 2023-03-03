@@ -1,6 +1,6 @@
 import { useDispatch } from 'react-redux';
 
-import { changeFilter } from 'redux/filterSlice';
+import { changeFilter } from 'redux/filterSlice/filterSlice';
 import PropTypes from 'prop-types';
 import { Content, Title, Input, LabelTitle } from './Filter.styled';
 

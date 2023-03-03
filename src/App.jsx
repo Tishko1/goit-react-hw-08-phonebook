@@ -1,90 +1,81 @@
-import React from 'react';
-import {  Navigate, Route, Routes } from 'react-router-dom';
+import React, { Suspense, lazy, useEffect } from 'react';
+import { Navigate, Route, Routes } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
 
-import SignInPage from 'pages/SignIn/SignIn';
-import SignUpPage from 'pages/SignUp/SignUp';
-import ContactsPage from 'pages/Contacts/Contacts';
-// import Loader from 'components/Loader/Loader';
+// import HomePage from 'pages/Home/Home';
+// import SignInPage from 'pages/SignIn/SignIn';
+// import SignUpPage from 'pages/SignUp/SignUp';
+// import ContactsPage from 'pages/Contacts/Contacts';
 
-import { StyledNavLink } from 'App.styled';
+import Loader from 'components/Loader/Loader';
 
+import { selectIsLoggedIn, selectUserData } from 'redux/userSlice/selectors';
 
+import { StyledNavLink, Button, Title } from 'App.styled';
+import {
+  getCurrentUserRequest,
+  logOutRequest,
+} from 'redux/userSlice/userSlice';
 
-const styles = {
-  color: '#010101',
-  paddingTop: '80px',
-};
+const HomePage = lazy(() => import('pages/Home/Home'));
+const SignInPage = lazy(() => import('pages/SignIn/SignIn'));
+const SignUpPage = lazy(() => import('pages/SignUp/SignUp'));
+const ContactsPage = lazy(() => import('pages/Contacts/Contacts'));
 
 export const App = () => {
+  const dispatch = useDispatch();
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const userData = useSelector(selectUserData);
+
+  const handleLogOut = () => {
+    dispatch(logOutRequest());
+  };
+
+  useEffect(() => {
+    const token = localStorage.getItem('token');
+    if (!token) return;
+
+    dispatch(getCurrentUserRequest());
+  }, [dispatch]);
+
   return (
-    <div style={styles}>
+    <div>
       <header>
         <nav>
-          <StyledNavLink to="/">Contacts</StyledNavLink>
-          <StyledNavLink to="/sign-in">Sign In</StyledNavLink>
-          <StyledNavLink to="/sign-up">Sign Up</StyledNavLink>
+          {isLoggedIn ? (
+            <>
+              <StyledNavLink to="/">Home</StyledNavLink>
+              <StyledNavLink to="/contacts">Contacts</StyledNavLink>
+              <Title>Hello, {userData.name}</Title>
+              <Button onClick={handleLogOut}>Logout</Button>
+            </>
+          ) : (
+            <>
+              <StyledNavLink to="/">Home</StyledNavLink>
+              <StyledNavLink to="/sign-in">Sign In</StyledNavLink>
+              <StyledNavLink to="/sign-up">Sign Up</StyledNavLink>
+            </>
+          )}
         </nav>
       </header>
 
       <main>
+        <Suspense fallback={<Loader />}>
           <Routes>
-            <Route path="/" element={<ContactsPage />} />
+            <Route path="/" element={<HomePage />} />
+            <Route path="/contacts" element={<ContactsPage />} />
             <Route path="/sign-in" element={<SignInPage />} />
             <Route path="/sign-up" element={<SignUpPage />} />
-            
-            <Route path="*" element={<Navigate to="/" replace={true} />} />
-            
+
+            <Route path="*" element={<Navigate to="/" />} />
           </Routes>
+        </Suspense>
       </main>
     </div>
   );
 };
 
 
-
-
-
-
-// import { useEffect } from 'react';
-// import { useDispatch } from 'react-redux';
-// import { Route, Routes, Navigate } from 'react-router-dom';
-// import { ContactForm } from './components/ContactForm/ContactForm';
-// import { ContactList } from './components/ContactList/ContactList';
-// import { Filter } from './components/Filter/Filter';
-// import { Loader } from './components/Loader/Loader';
-// import { Container } from './App.styled';
-// import { useSelector } from 'react-redux';
-// import { selectFilteredContacts, selectIsLoading } from 'redux/selectors';
-// import { getContacts } from 'redux/operations';
-// import { NavBar } from './components/NavBar/NavBar';
-// import { Login } from "./components/Login/Login";
-// import { Register } from "./components/Register/Register";
-// import  Home from 'pages/Home';
-
-// export function App() {
-//   const contacts = useSelector(selectFilteredContacts);
-//   const isLoading = useSelector(selectIsLoading);
-//   const dispatch = useDispatch();
-
-//   useEffect(() => {
-//     dispatch(getContacts());
-//   }, [dispatch]);
-
-//   return (
-//     <Routes>
-//       <Route path="/" element={<NavBar/>}>
-//         <Route path="/login" element={<Login/>}/>
-//         <Route path="/register" element={<Register/>}/>
-//         <Route index element={<Home />} />
-//           <Route path="/сontactForm" element={<ContactForm/>}/>
-//           <Route path="/filter" element={<Filter/>}/>
-//           <Route path="/сontactList" element={<ContactList/>}/>
-//       </Route>
-//       <Route path="*" element={<Navigate to="/" replace={true} />} />
-//     </Routes>
-    
-//   );
-// }
 
 // {/* <Container>
 //       {isLoading && <Loader />}

@@ -9,6 +9,13 @@ export const ListsContainer = styled.div`
   position: relative;
 `;
 
+export const Title = styled.p`
+font-size: 20px;
+
+// margin: 15px auto;
+padding: 15px;
+`;
+
 export const PostsList = styled.ul`
   display: flex;
   flex-basis: 60%;
@@ -89,6 +96,7 @@ export const Button = styled.button`
   width: 110px;
   height: 40px;
   padding: 0px 10px;
+  margin: 0 15px 15px;
   text-align: center;
   text-transform: uppercase;
   cursor: pointer;

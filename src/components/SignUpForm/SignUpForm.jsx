@@ -3,9 +3,8 @@ import PropTypes from 'prop-types';
 import { useSelector } from 'react-redux';
 
 import { selectStatus } from 'redux/userSlice/selectors';
-import { Loader } from 'components/Loader/Loader';
-
-import { StyledForm, FormTitle,  FormInput} from './SignUp.styled';
+import Loader from 'components/Loader/Loader';
+import { StyledForm, FormTitle, FormInput, Input} from './SignUpForm.styled';
 
 function SignUpForm({ onSubmit, isLoginForm = false }) {
   const nameInputRef = useRef();
@@ -28,11 +27,12 @@ function SignUpForm({ onSubmit, isLoginForm = false }) {
 
   return (
     <StyledForm onSubmit={handleSubmit}>
+      
       <FormTitle>{isLoginForm ? 'Sign In' : 'Sign Up'}</FormTitle>
       {isLoginForm ? null : (
         <FormInput>
           <span>Ім'я: </span>
-          <input
+          <Input 
             type="text"
             name="name"
             placeholder={"Введіть ім'я"}
@@ -68,6 +68,7 @@ function SignUpForm({ onSubmit, isLoginForm = false }) {
         {isLoginForm ? 'Sign In' : 'Sign Up'}
       </button>
       {status === 'pending' && <Loader />}
+      
     </StyledForm>
   );
 }
